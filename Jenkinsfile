@@ -1,9 +1,15 @@
 pipeline {
   agent any
   stages {
-    stage('printStep') {
+    stage('Clean All') {
       steps {
-        sh 'echo "hello world!!"'
+        sh '''sh "rm -rf /var/lib/jenkins/.gradle/caches"
+sh "./gradlew clean"'''
+      }
+    }
+    stage('build') {
+      steps {
+        git(url: 'https://github.com/sukantamaikap/TestRepo', branch: 'master', credentialsId: 'user-git')
       }
     }
   }
