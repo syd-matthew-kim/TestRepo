@@ -16,5 +16,10 @@ pipeline {
         sh './gradlew test'
       }
     }
+    stage('all done') {
+      steps {
+        sh 'echo "Have a coffee, this is just a test!!!!!"'
+      }
+    }
   }
 }
