@@ -1,16 +1,37 @@
 plugins {
     id 'java'
+    id 'java-library'
+    id 'war'
+    id 'maven'
+    id 'nu.studer.credentials' version "1.0.4"
 }
 
-group 'au.com.petcircle'
-version '1.0-SNAPSHOT'
+project.group 'au.com.petcircle'
+version '1.0'
 
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+        maven { url "http://husky.petcircle.com.au:8081/repository/maven-public/" }
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+
+uploadArchives {
+    String nexus_username = credentials.nexus_username
+    String nexus_password = credentials.nexus_password
+    String nexus_url = credentials.nexus_url
+
+    repositories {
+        mavenDeployer {
+            repository(url: nexus_url) {
+                authentication(userName: nexus_username, password: nexus_password)
+            }
+        }
+    }
+}
+
+
